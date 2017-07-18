@@ -1,56 +1,64 @@
-<div id="user_settings" class="gradient">
-  <div class="container center-contents">
-    <h1 class="text-center accent settings-section">Settings</h1>
-    <div class="profile settings-section">
-      <h2 class="accent bold">Profile</h2>
-      <div class="settings-card profile-card">
-        <div class="profile-pic align-items-center">
-          <%= image_tag gravatar_url(@user, 100), alt: "Profile Pic"%>
-        </div>
-        <div class="profile-details">
-          <div class="field">
-            <p class="label bold">Name</p>
-            <div class="value"><%= best_in_place @user, :username, as: :input %></div>
-          </div>
-          <div class="field">
-            <p class="label bold">Email Address</p>
-            <div class="value"><%= best_in_place @user, :email, as: :input %></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="learning-goal settings-section">
-      <h2 class="accent bold">Learning Goal</h2>
-      <div class="settings-card profile-card">
-        <div class="goal">
-          <%= best_in_place @user, :learning_goal, as: :input, place_holder: "Click me to set a learning goal!"%>
-        </div>
-      </div>
-    </div>
-    <div class="password-card settings-section">
-      <h2 class="accent bold">Password</h2>
-      <div class="password-card settings-card">
-        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "form-horizontal" }) do |f| %>
-          <%= f.error_notification %>
+<div class="gradient">
+  <div class="container">
+    <h1 class="text-center accent">Settings</h1>
+    <div class='col-lg-10 offset-lg-1'>
 
-          <div class="form-inputs">
-            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-              <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
-            <% end %>
+      <div class="settings-section">
+        <h2 class="accent settings-section__heading">Profile</h2>
 
-            <%= f.input :password, autocomplete: "off", required: false, label: false, placeholder: 'New Password' %>
-            <%= f.input :password_confirmation, required: false, label: false, placeholder: 'Confirm New Password' %>
-            <%= f.input :current_password, hint: "Enter your current password to confirm", required: true, label: false, placeholder: 'Old Password' %>
+        <div class="settings-card-content card-main">
+          <i class="fa fa-pencil-square-o settings-card-content__edit-button" aria-hidden="true"></i>
+          <div class="settings-card-content__picture">
+            <%= image_tag @user.image, alt: "Profile Picture"%>
           </div>
 
-          <%= f.button :submit, "Update"%>
+          <%= form_for @user, html: { class: "settings-card-content__form" } do |form| %>
+            <%= form.label :name, class: 'bold-label' %>
+            <%= form.text_field :username, class: 'push-down', disabled: true %>
 
-        <% end %>
+            <%= form.label :email, class: 'bold-label' %>
+            <%= form.email_field :email, class: 'push-down settings-input', disabled: true %>
+            <%= form.submit "Update" %>
+          <% end %>
+        </div>
       </div>
-    </div>
-    <div class="cancel-link text-center">
-      <p><%= link_to "Delete my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
+
+      <div class="settings-section">
+        <h2 class="accent settings-section__heading">Learning Goal</h2>
+        <div class="card-main">
+          <i class="fa fa-pencil-square-o settings-card-content__edit-button" aria-hidden="true"></i>
+          <%= form_for @user, html: { class: "settings-card-content__form" } do |form| %>
+            <%= form.label :learning_goal, class: 'bold-label' %>
+            <%= form.text_field :learning_goal, class: 'push-down' %>
+            <%= form.submit "Update" %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <h2 class="accent settings-section__heading">Password</h2>
+        <div class="card-main">
+          <i class="fa fa-pencil-square-o settings-card-content__edit-button" aria-hidden="true"></i>
+
+          <%= form_for @user, html: { class: "settings-card-content__form" } do |form| %>
+
+            <%= form.label :current_password, class: 'bold-label' %>
+            <%= form.password_field :current_password, placeholder: 'Current Password', class: 'push-down' %>
+
+            <%= form.label :password, class: 'bold-label' %>
+            <%= form.password_field :password, placeholder: 'New Password', class: 'push-down' %>
+
+            <%= form.label :password_confirmation, class: 'bold-label' %>
+            <%= form.password_field :password_confirmation, placeholder: 'Confirm New Password', class: 'push-down' %>
+
+            <%= form.submit "Update" %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="delete-account-link text-center">
+        <%= link_to "Delete my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %>
+      </div>
     </div>
   </div>
-
 </div>

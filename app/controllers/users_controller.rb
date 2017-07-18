@@ -7,6 +7,14 @@ class UsersController < ApplicationController
     @courses = Course.order(:position)
   end
 
+  def update
+    if @user.update_attributes!(user_params)
+      flash[:success] = 'Updated successfully'
+    else
+      flash[:warning] = 'fail'
+    end
+  end
+
   def send_confirmation_link
     current_user.send_confirmation_instructions
     flash[:notice] = 'Confirmation instructions have been sent to your email address!'

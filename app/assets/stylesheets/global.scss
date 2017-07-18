@@ -94,3 +94,19 @@ ul {
 .gradient {
   background-image: linear-gradient(to bottom, $white, $light-grey);
 }
+
+
+.bold-label {
+  color: #4a4a4a;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.push-down {
+  margin-bottom: 1rem;
+}
+
+.delete-account-link {
+  color: red;
+  text-decoration: underline;
+}
